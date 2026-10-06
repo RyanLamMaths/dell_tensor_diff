@@ -33,7 +33,13 @@ A_two := function()
     AssignGeneratorVariables(KQ);
     return KQ/[alpha*beta, gamma*beta, delta*alpha, delta*delta];
     end;
-
+A_three := function()
+    local Q, KQ;
+    Q := Quiver(5, [[1,1,"delta"], [1,2,"alpha"], [2,3,"beta_1"], [3, 4, "beta_2"],[5,2,"gamma"]]);
+    KQ := PathAlgebra(Rationals,Q);;
+    AssignGeneratorVariables(KQ);
+    return KQ/[alpha*beta_1, beta_1*beta_2, gamma*beta_1, delta*alpha, delta*delta];
+    end;
 
 A_prime := function()
     local Q_prime, KQ_prime;
@@ -43,6 +49,8 @@ A_prime := function()
     return KQ_prime/[ell*ell, ell*alpha, alpha*gamma, alpha*delta, beta*delta];
     end;
 
-# One can do ModuleDeloopingLevelLessThanN(SimpleModules(AtA)[11], 3); and 
-# AlgebraDeloopingLevelLessThanN(AtA, 2); to realize the Algebra AtA has 
-# delooping level 3.
+# A := A_prime();
+# AtA := TensorProductOfAlgebras(A, A)
+# ModuleDeloopingLevelLessThanN(SimpleModules(AtA)[11], 3);  
+# AlgebraDeloopingLevelLessThanN(AtA, 2); 
+# One can see that the Algebra AtA has delooping level 3 by running the following code.
