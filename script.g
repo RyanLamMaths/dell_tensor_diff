@@ -1,4 +1,4 @@
-ModuleDeloopingLevelLessThanN := function (M, n)
+ModuleDeloopingLevelNotMoreThanN := function (M, n)
 # Given A-moduule M and positive integer n, output whether dell(M) <= n.
 # Note: the result of CommonDirectSummand can be false or a list.
 # In the case of outputting anything other than false, should be counted as true.
@@ -17,14 +17,14 @@ else
 fi;
 end;
 
-AlgebraDeloopingLevelLessThanN := function(A, n)
+AlgebraDeloopingLevelNotMoreThanN := function(A, n)
 local results, RegA;
 if n = 0 then 
     RegA := DirectSumOfQPAModules(IndecProjectiveModules(A));
     Print("Socle of A: ", Last(SocleSeries(RegA)), "\n");
     return not (0 in Last(SocleSeries(RegA)));
 else
-    results := List(SimpleModules(A), M -> ModuleDeloopingLevelLessThanN(M, n));
+    results := List(SimpleModules(A), M -> ModuleDeloopingLevelNotMoreThanN(M, n));
     return not (false in results); 
 fi;
 end;
@@ -54,6 +54,6 @@ A_prime := function()
 
 # A := A_prime();
 # AtA := TensorProductOfAlgebras(A, A)
-# ModuleDeloopingLevelLessThanN(SimpleModules(AtA)[11], 3);  
-# AlgebraDeloopingLevelLessThanN(AtA, 2); 
+# ModuleDeloopingLevelNotMoreThanN(SimpleModules(AtA)[11], 3);  
+# AlgebraDeloopingLevelNotMoreThanN(AtA, 2); 
 # One can see that the Algebra AtA has delooping level 3 by running the following code.
