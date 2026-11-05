@@ -2,28 +2,31 @@ ModuleDeloopingLevelLessThanN := function (M, n)
 # Given A-moduule M and positive integer n, output whether dell(M) <= n.
 # Note: the result of CommonDirectSummand can be false or a list.
 # In the case of outputting anything other than false, should be counted as true.
-local N, nM;
+local N, nM, result;
 nM := NthSyzygy(M, n);
 Print("Nth Syzygy is", nM, "\n");
 if Dimension(nM) = 0 or IsProjectiveModule(nM) then
     Print("Results: True", "\n");
-    return 0;
+    return true;
 else
     N := NthSyzygy(TransposeOfModule(NthSyzygy(TransposeOfModule(nM), n+1)), n+1);
     Print("Testing summand:", N, "\n");
-    Print("Results:", CommonDirectSummand(nM, N), "\n");
-    return 0;
+    result := CommonDirectSummand(nM, N);
+    Print("Results:", result , "\n");
+    return IsList(result);
 fi;
 end;
 
 AlgebraDeloopingLevelLessThanN := function(A, n)
-local i, M;
-i := 1;
-for M in SimpleModules(A) do 
-    Print("Start Test for Simple number ", i, "\n");
-    ModuleDeloopingLevelLessThanN(M, n);
-    i := i + 1;
-od;
+local results, RegA;
+if n = 0 then 
+    RegA := DirectSumOfQPAModules(IndecProjectiveModules(A));
+    Print("Socle of A: ", Last(SocleSeries(RegA)), "\n");
+    return not (0 in Last(SocleSeries(RegA)));
+else
+    results := List(SimpleModules(A), M -> ModuleDeloopingLevelLessThanN(M, n));
+    return not (false in results); 
+fi;
 end;
 
 A_two := function()
